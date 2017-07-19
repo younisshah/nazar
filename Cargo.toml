@@ -1,0 +1,7 @@
+[package]
+name = "nazar"
+version = "0.1.0"
+authors = ["Younis Shah <younisashah@gmail.com>"]
+
+[dependencies]
+redis = "0.5.3"
