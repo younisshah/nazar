@@ -30,7 +30,7 @@ let cmd = String::from("SET");
                    nazar::t38::Types::String(String::from("POINT")),
                    nazar::t38::Types::Float(33.12),
                    nazar::t38::Types::Float(33.112));
-    println!("rust_key: {}", nazar::t38::execute(cmd, args).unwrap());
+    println!("resp: {}", nazar::t38::execute(cmd, args).unwrap());
 ```
 
 2) `GET` command
@@ -39,7 +39,7 @@ let cmd = String::from("SET");
 let cmd = String::from("GET");
     let args = vec!(nazar::t38::Types::String(String::from("my")),
                    nazar::t38::Types::String(String::from("home")));
-    println!("rust_key: {}", nazar::t38::execute(cmd, args).unwrap());
+    println!("my home: {}", nazar::t38::execute(cmd, args).unwrap());
 ```
 
 ####  A work in progress
