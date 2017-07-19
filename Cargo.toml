@@ -2,6 +2,11 @@
 name = "nazar"
 version = "0.1.0"
 authors = ["Younis Shah <younisashah@gmail.com>"]
+description = "A Tile38 client in rust!"
+homepage = "https://github.com/younisshah/nazar"
+documentation = "https://github.com/younisshah/nazar"
+license = "MIT"
+readme = "README.md"
 
 [dependencies]
 redis = "0.5.3"
