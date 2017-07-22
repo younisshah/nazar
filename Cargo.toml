@@ -10,3 +10,4 @@ readme = "README.md"
 
 [dependencies]
 redis = "0.5.3"
+ws = "*"
