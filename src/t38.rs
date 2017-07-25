@@ -5,22 +5,27 @@ extern crate ws;
 type NazarResult<T> = redis::RedisResult<T>;
 
 /// Represents T38 types
-#[allow(dead_code)]
 pub enum Types {
     String(&'static str),
     Int(isize),
     Float(f32)
 }
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Clone, Copy)]
 pub struct Client {
     url: &'static str
 }
 
 impl Client {
+    #[deprecated(since="1.0.1", note= "Please use `from` instead.")]
     pub fn new(url: &'static str) -> Self {
         Client { url }
     }
+    /// Constructor with one argument - Rust convention!
+    pub fn from(url: &'static str) -> Self {
+        Client { url }
+    }
+    /// low level API
     pub fn execute(self, command: &str, args: Vec<Types>) -> NazarResult<String> {
         let mut command = redis::cmd(command);
         for e in args {

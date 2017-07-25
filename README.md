@@ -15,7 +15,7 @@ In your `Cargo.toml` file add under `[dependencies]` section
 
 ```ini
 [dependencies]
-nazar = "1.0.0"
+nazar = "1.0.1"
 ```
 
 ### Usage 
@@ -25,7 +25,7 @@ nazar = "1.0.0"
 
 ```rust
 use self::nazar::t38::Types::{String, Float};
-let n = nazar::t38::Client::new("redis://127.0.0.1:9851");
+let n = nazar::t38::Client::from("redis://127.0.0.1:9851"); // new is now deprecated!
 
 match n.execute("SET", vec![String("my"), String("home"), Float(23.12), Float(45.343)]) {
     Ok(s) => println!("{}", s),
@@ -38,7 +38,7 @@ match n.execute("SET", vec![String("my"), String("home"), Float(23.12), Float(45
 
 ```rust
 use self::nazar::t38::Types::{String};
-let n = nazar::t38::Client::new("redis://127.0.0.1:9851");
+let n = nazar::t38::Client::from("redis://127.0.0.1:9851"); // new is now deprecated!
 
 match n.execute("GET", vec![String("my"), String("home")]) {
     Ok(s) => println!("{}", s),
