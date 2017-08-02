@@ -56,7 +56,7 @@ let work = |msg| {
 n.open_fence("ws://127.0.0.1:9851", "my_fleet", "12.12", "33.22", "6000", work);
 ```
 
-4) New API to execute T38 command
+4) **New API to execute T38 command**
 
 ```rust
 let mut n = nazar::t38::Client::from("redis://127.0.0.1:9851");
