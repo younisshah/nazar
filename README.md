@@ -54,7 +54,7 @@ let n = nazar::t38::Client::new();
 
 Then use `n` to open a geofence like this:
 
-3) Open a static `FENCE`
+3) Open a static `FENCE` using `open_fence`:
 
 ```rust
 use self::nazar::t38::Types::{String};
@@ -64,7 +64,8 @@ let work = |msg| {
 n.open_fence("ws://127.0.0.1:9851", "my_fleet", "12.12", "33.22", "6000", work);
 ```
 
-4) **New API to execute T38 command**
+4) New API to execute T38 command - `cmd`, `arg` and `execute_with_args`. 
+This is a high-level API to execute Tile38 commands!
 
 ```rust
 let mut n = nazar::t38::Client::from("redis://127.0.0.1:9851");
@@ -75,7 +76,7 @@ match n.execute_with_args() {
 };
 ```
 
-5) New API to open a static geofence with GeoJSON object type.
+5) New API to open a static geofence with GeoJSON object type. `open_fence_within`
  
  ```rust
 let n = nazar::t38::Client::new();
