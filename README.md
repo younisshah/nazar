@@ -1,5 +1,7 @@
 ## Nazar
 
+[![nazar](https://img.shields.io/crates/v/nazar.svg)](https://crates.io/crates/nazar)
+
 [Tile38](http://tile38.com) is an open source (MIT licensed), in-memory geolocation data store, spatial index, 
 and realtime geofence. It supports a variety of object types including lat/lon points, bounding boxes, XYZ tiles, 
 Geohashes, and GeoJSON.
