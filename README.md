@@ -25,7 +25,7 @@ nazar = "1.0.1"
 
 ```rust
 use self::nazar::t38::Types::{String, Float};
-let n = nazar::t38::Client::from("redis://127.0.0.1:9851"); // new is now deprecated!
+let n = nazar::t38::Client::from("redis://127.0.0.1:9851");
 
 match n.execute("SET", vec![String("my"), String("home"), Float(23.12), Float(45.343)]) {
     Ok(s) => println!("{}", s),
@@ -38,13 +38,21 @@ match n.execute("SET", vec![String("my"), String("home"), Float(23.12), Float(45
 
 ```rust
 use self::nazar::t38::Types::{String};
-let n = nazar::t38::Client::from("redis://127.0.0.1:9851"); // new is now deprecated!
+let n = nazar::t38::Client::from("redis://127.0.0.1:9851");
 
 match n.execute("GET", vec![String("my"), String("home")]) {
     Ok(s) => println!("{}", s),
     Err(e) => panic!(e)
 }
 ```
+
+To open a fence **only**, it is advisable to use `new` associated method like this:
+ 
+```rust
+let n = nazar::t38::Client::new();
+```
+
+Then use `n` to open a geofence like this:
 
 3) Open a static `FENCE`
 
@@ -66,6 +74,17 @@ match n.execute_with_args() {
     Err(e) => panic!(e),
 };
 ```
+
+5) New API to open a static geofence with GeoJSON object type.
+ 
+ ```rust
+let n = nazar::t38::Client::new();
+let work = |msg| {
+    println!("FENCE updates {:?}", msg);
+};
+n.open_fence_within("ws://localhost:9851", "deep_fleet", "qwerty123", vec![vec![12.32, 23.4], vec![22.32, 33.4], vec![42.32, 23.5], vec![12.32, 23.4]], work)
+```
+
 
 ####  A work in progress
 
