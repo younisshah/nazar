@@ -20,7 +20,7 @@ In your `Cargo.toml` file add under `[dependencies]` section
 
 ```ini
 [dependencies]
-nazar = "1.0.3"
+nazar = "1.0.4"
 ```
 
 ### Usage 
