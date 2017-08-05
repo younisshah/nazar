@@ -108,7 +108,7 @@ let work = |msg| {
 n.open_fence("ws://127.0.0.1:9851", "my_fleet", "12.12", "33.22", "6000", work);
 ```
 
-5)Open a static geofence with GeoJSON object type. `open_fence_within`
+7) Open a static geofence with GeoJSON object type. `open_fence_within`
  
  ```rust
 let n = nazar::t38::Client::new();
