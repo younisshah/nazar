@@ -6,7 +6,7 @@
 and realtime geofence. It supports a variety of object types including lat/lon points, bounding boxes, XYZ tiles, 
 Geohashes, and GeoJSON.
 
-nazar is a Tile38 client in rust!
+**nazar** is a Tile38 client in rust!
 
 The API is a bit sane now albeit still weird and unstable. 
 
@@ -51,28 +51,7 @@ match n.execute("GET", vec![String("my"), String("home")]) {
 }
 ```
 
-To open a fence **only**, it is advisable to use `new` associated method like this:
- 
-```rust
-let n = nazar::t38::Client::new();
-```
-
-Then use `n` to open a geofence like this:
-
-3) Open a static `FENCE` using `open_fence` (use this when to want to communicate with the server as well):
-
-```rust
-fn action (out: &nazar::t38::NazarSender, msg: String) {
-    out.send("OK").unwrap();
-    println!("{}", msg);
-}
-
-//.....
-
-n.open_fence("ws://127.0.0.1:9851", "my_fleet", "12.12", "33.22", "6000", action);
-```
-
-4) New API to execute T38 command - `cmd`, `arg` and `execute_with_args`. 
+3) New API to execute T38 command - `cmd`, `arg` and `execute_with_args`. 
 This is a high-level API to execute Tile38 commands!
 
 ```rust
@@ -84,38 +63,62 @@ match n.execute_with_args() {
 };
 ```
 
-5) New API to open a static geofence with GeoJSON object type. `open_fence_within` (use this when to want to communicate with the server as well):
+
+## Geofence features
+
+To open a fence **only**, it is advisable to use `new` associated method like this:
  
- ```rust
-fn action (out: &nazar::t38::NazarSender, msg: String) {
-    out.send("OK").unwrap();
-    println!("{}", msg);
-}
-
-//.....
-
-n.open_fence_within("ws://localhost:9851", "my_fleet", "qwerty123", vec![vec![12.32, 23.4], vec![22.32, 33.4], vec![42.32, 23.5], vec![12.32, 23.4]], action);
+```rust
+let n = nazar::t38::Client::new();
 ```
 
+Then use `n` to open a geofence like this:
 
-6) Open a static `FENCE` using `open_fence`:
+1) Open a static `FENCE` using `open_fence`:
 
 ```rust
-use self::nazar::t38::Types::{String};
 let work = |msg| {
     println!("FENCE updates {:?}", msg);
 };
 n.open_fence("ws://127.0.0.1:9851", "my_fleet", "12.12", "33.22", "6000", work);
 ```
 
-7) Open a static geofence with GeoJSON object type. `open_fence_within`
+2) Open a static geofence with GeoJSON object type. `open_fence_within`
  
  ```rust
-let n = nazar::t38::Client::new();
 let work = |msg| {
     println!("FENCE updates {:?}", msg);
 };
 n.open_fence_within("ws://localhost:9851", "my_fleet", "qwerty123", vec![vec![12.32, 23.4], vec![22.32, 33.4], vec![42.32, 23.5], vec![12.32, 23.4]], work)
+```
+
+
+3) Open a static `FENCE` using `open_fence` (use this when to want to communicate with the server as well):
+
+```rust
+fn action (out: &nazar::t38::NazarSender, msg: String) {
+    out.send("OK").unwrap();
+    println!("{}", msg);
+    // do stuff with msg
+}
+
+//.....
+
+n.open_fence2("ws://127.0.0.1:9851", "my_fleet", "12.12", "33.22", "6000", action);
+```
+
+4) New API to open a static geofence with GeoJSON object type. `open_fence_within` (use this when to want to communicate with the server as well):
+ 
+ ```rust
+fn action (out: &nazar::t38::NazarSender, msg: String) {
+    out.send("OK").unwrap();
+    println!("{}", msg);
+    // do stuff with msg
+}
+
+//.....
+
+n.open_fence_within2("ws://localhost:9851", "my_fleet", "qwerty123", vec![vec![12.32, 23.4], vec![22.32, 33.4], vec![42.32, 23.5], vec![12.32, 23.4]], action);
 ```
 
 
