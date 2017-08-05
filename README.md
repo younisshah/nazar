@@ -1,12 +1,17 @@
 ## Nazar
 
+[![nazar](https://img.shields.io/crates/v/nazar.svg)]()
+
 [Tile38](http://tile38.com) is an open source (MIT licensed), in-memory geolocation data store, spatial index, 
 and realtime geofence. It supports a variety of object types including lat/lon points, bounding boxes, XYZ tiles, 
 Geohashes, and GeoJSON.
 
 nazar is a Tile38 client in rust!
 
-The API is a bit sane now albeit still weird.
+The API is a bit sane now albeit still weird and unstable. 
+
+**API will change a lot**
+
 
 ### Install
 
