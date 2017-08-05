@@ -1,6 +1,6 @@
 [package]
 name = "nazar"
-version = "1.0.4"
+version = "1.0.5"
 authors = ["Younis Shah <younisashah@gmail.com>"]
 description = "A Tile38 client in rust!"
 homepage = "https://github.com/younisshah/nazar"

@@ -120,7 +120,41 @@ impl<'a> Client<'a> {
     }
 
     /// Open a static geofence!
-    pub fn open_fence(self, url: &str, fleet: &str, lat: &str, lng: &str, radius: &str, action: fn(&NazarSender, String)) {
+    /// where `work` is closure
+    pub fn open_fence<F>(self, url: &str, fleet: &str, lat: &str, lng: &str, radius: &str, work: F) where F: Fn(String) {
+        let cmd_url = format!("{}/NEARBY+{}+FENCE+POINT+{}+{}+{}", url, fleet, lat, lng, radius);
+        ws::connect(cmd_url, |_out| {
+            |msg: ws::Message| {
+                match msg.into_text() {
+                    Ok(m) => work(m),
+                    Err(e) => println!("ERR: {:?}", e),
+                }
+                Ok(())
+            }
+        }).unwrap()
+    }
+
+    /// open fence using GeoJSON
+    /// Uses T38's WITHIN command
+    /// where `work` is closure
+    pub fn open_fence_within<F>(self, url: &str, fleet: &str, id: &str, coordinates: Vec<Vec<f64>>, work: F) where F: Fn(String) {
+        let geo_json = create_geo_json(id, coordinates.clone());
+        let cmd_url = format!("{}/WITHIN+{}+FENCE+OBJECT+{}", url, fleet, geo_json);
+        ws::connect(cmd_url, |_out| {
+            |msg: ws::Message| {
+                match msg.into_text() {
+                    Ok(m) => work(m),
+                    Err(e) => println!("ERR {:?}", e),
+                }
+                Ok(())
+            }
+        }).unwrap()
+    }
+
+    /// Open a static geofence!
+    /// takes a function of type `fn(&NazarSender, String)`
+    /// `NazarSender` represents a WebSocket connection and `String` is the message from server.
+    pub fn open_fence2(self, url: &str, fleet: &str, lat: &str, lng: &str, radius: &str, action: fn(&NazarSender, String)) {
         let cmd_url = format!("{}/NEARBY+{}+FENCE+POINT+{}+{}+{}", url, fleet, lat, lng, radius);
         connect(cmd_url, |out: Sender| {
             WSClient { out, action }
@@ -129,7 +163,9 @@ impl<'a> Client<'a> {
 
     /// open fence using GeoJSON
     /// Uses T38's WITHIN command
-    pub fn open_fence_within(self, url: &str, fleet: &str, id: &str, coordinates: Vec<Vec<f64>>, action: fn(&NazarSender, String)) {
+    /// Takes a function of type `fn(&NazarSender, String)`
+    /// `NazarSender` represents a WebSocket connection and `String` is the message from server.
+    pub fn open_fence_within2(self, url: &str, fleet: &str, id: &str, coordinates: Vec<Vec<f64>>, action: fn(&NazarSender, String)) {
         let geo_json = create_geo_json(id, coordinates.clone());
         let cmd_url = format!("{}/WITHIN+{}+FENCE+OBJECT+{}", url, fleet, geo_json);
         connect(cmd_url, |out: Sender| {
