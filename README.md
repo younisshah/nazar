@@ -63,6 +63,11 @@ match n.execute_with_args() {
 };
 ```
 
+4) `PING` to check if the server is live or dead.
+```rust
+use nazar::t38::{Client};
+let is_live = Client::ping("redis://127.0.0.1:9851");
+```
 
 ## Geofence features
 

@@ -92,6 +92,31 @@ impl<'a> Client<'a> {
         self
     }
 
+    /// Pings the Tile38 server running at the given url.
+    /// It should be used to check if the server is alive or dead!
+    ///
+    /// # Arguments
+    ///
+    /// * `url` - URL at which a Tile38 server instance is running
+    ///
+    /// # Example
+    /// use nazar::t38::{Client}
+    /// let is_live = Client::ping("redis://127.0.0.1:9851");
+    pub fn ping(url: &'a str) -> bool
+    {
+        assert!(url != "");
+        let cmd = redis::cmd("PING");
+        let result: NazarResult<String> = cmd.query(&get_connection(url).unwrap());
+        match result {
+            Ok(r) => {
+                r == "PONG"
+            }
+            Err(_) => {
+                false
+            }
+        }
+    }
+
     /// execute_with_args executes Tile38 query
     pub fn execute_with_args(&self) -> NazarResult<String> {
         if !self.cmd.is_empty() {
