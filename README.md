@@ -126,14 +126,14 @@ fn action (out: &nazar::t38::NazarSender, msg: String) {
 n.open_fence_within2("ws://localhost:9851", "my_fleet", "qwerty123", vec![vec![12.32, 23.4], vec![22.32, 33.4], vec![42.32, 23.5], vec![12.32, 23.4]], action);
 ```
 
-5) Open a static geofence (circular) using `open_geofence_and_send` (use this when you want to send updates to the client who opened the fence)
+5) Open a static geofence (circular) using `open_fence_and_send` (use this when you want to send updates to the client who opened the fence)
 ```rust
- n.open_fence2("ws://127.0.0.1:9851", "my_fleet", "12.12", "33.22", "6000", client); // client is a NazarSender
+ n.open_fence_and_send("ws://127.0.0.1:9851", "my_fleet", "12.12", "33.22", "6000", client); // client is a NazarSender
 ```
 
-6) Open a static geofence (polygonal) using `open_geofence_within_and_send` (use this when you want to send updates to the client who opened the fence)
+6) Open a static geofence (polygonal) using `open_fence_within_and_send` (use this when you want to send updates to the client who opened the fence)
 ```rust
- n.open_fence_within2("ws://localhost:9851", "my_fleet", "qwerty123", vec![vec![12.32, 23.4], vec![22.32, 33.4], vec![42.32, 23.5], vec![12.32, 23.4]], client); // client is a NazarSender
+ n.open_fence_within_and_send("ws://localhost:9851", "my_fleet", "qwerty123", vec![vec![12.32, 23.4], vec![22.32, 33.4], vec![42.32, 23.5], vec![12.32, 23.4]], client); // client is a NazarSender
 ```
 
 
