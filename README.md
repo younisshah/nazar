@@ -20,7 +20,7 @@ In your `Cargo.toml` file add under `[dependencies]` section
 
 ```ini
 [dependencies]
-nazar = "1.0.4"
+nazar = "1.0.7"
 ```
 
 ### Usage 
@@ -112,7 +112,7 @@ fn action (out: &nazar::t38::NazarSender, msg: String) {
 n.open_fence2("ws://127.0.0.1:9851", "my_fleet", "12.12", "33.22", "6000", action);
 ```
 
-4) Open a static geofence with GeoJSON object type. `open_fence_within` (use this when to want to communicate with the server as well):
+4) Open a static geofence with GeoJSON object type. `open_fence_within` (use this when you want to communicate with the server as well):
  
  ```rust
 fn action (out: &nazar::t38::NazarSender, msg: String) {
@@ -124,6 +124,16 @@ fn action (out: &nazar::t38::NazarSender, msg: String) {
 //.....
 
 n.open_fence_within2("ws://localhost:9851", "my_fleet", "qwerty123", vec![vec![12.32, 23.4], vec![22.32, 33.4], vec![42.32, 23.5], vec![12.32, 23.4]], action);
+```
+
+5) Open a static geofence (circular) using `open_geofence_and_send` (use this when you want to send updates to the client who opened the fence)
+```rust
+ n.open_fence2("ws://127.0.0.1:9851", "my_fleet", "12.12", "33.22", "6000", client); // client is a NazarSender
+```
+
+6) Open a static geofence (polygonal) using `open_geofence_within_and_send` (use this when you want to send updates to the client who opened the fence)
+```rust
+ n.open_fence_within2("ws://localhost:9851", "my_fleet", "qwerty123", vec![vec![12.32, 23.4], vec![22.32, 33.4], vec![42.32, 23.5], vec![12.32, 23.4]], client); // client is a NazarSender
 ```
 
 

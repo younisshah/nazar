@@ -180,7 +180,7 @@ impl<'a> Client<'a> {
     /// takes a function of type `fn(&NazarSender, String)`
     /// `NazarSender` represents a WebSocket connection and `String` is the message from server.
     pub fn open_fence2(self, url: &str, fleet: &str, lat: &str, lng: &str, radius: &str, action: fn(&NazarSender, String)) {
-        let cmd_url = format!("{}/NEARBY+{}+FENCE+POINT+{}+{}+{}", url, fleet, lat, lng, radius);
+        let cmd_url = format!("ws://{}/NEARBY+{}+FENCE+POINT+{}+{}+{}", url, fleet, lat, lng, radius);
         connect(cmd_url, |out: Sender| {
             WSClient { out, action }
         }).unwrap()
@@ -195,6 +195,35 @@ impl<'a> Client<'a> {
         let cmd_url = format!("{}/WITHIN+{}+FENCE+OBJECT+{}", url, fleet, geo_json);
         connect(cmd_url, |out: Sender| {
             WSClient { out, action }
+        }).unwrap()
+    }
+
+    /// open a circular geofence and send the fence updates on the provided client - a WebSocket Connection
+    pub fn open_fence_and_send(self, url: &str, fleet: &str, lat: &str, lng: &str, radius: &str, client: &NazarSender) {
+        let cmd_url = format!("{}/NEARBY+{}+FENCE+POINT+{}+{}+{}", url, fleet, lat, lng, radius);
+        ws::connect(cmd_url, |_out| {
+            |msg: ws::Message| {
+                match msg.into_text() {
+                    Ok(m) => client.send(m).unwrap(),
+                    Err(e) => println!("ERR: {:?}", e),
+                }
+                Ok(())
+            }
+        }).unwrap()
+    }
+
+    /// open a polygonal geofence using  and send the fence updates on the provided client - a WebSocket Connection
+    pub fn open_fence_within_and_send(self, url: &str, fleet: &str, id: &str, coordinates: Vec<Vec<f64>>, client: &NazarSender) {
+        let geo_json = create_geo_json(id, coordinates.clone());
+        let cmd_url = format!("{}/WITHIN+{}+FENCE+OBJECT+{}", url, fleet, geo_json);
+        ws::connect(cmd_url, |_out| {
+            |msg: ws::Message| {
+                match msg.into_text() {
+                    Ok(m) => client.send(m).unwrap(),
+                    Err(e) => println!("ERR {:?}", e),
+                }
+                Ok(())
+            }
         }).unwrap()
     }
 }
