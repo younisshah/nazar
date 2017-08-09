@@ -32,7 +32,7 @@ nazar = "1.0.7"
 use self::nazar::t38::Types::{String, Float};
 let n = nazar::t38::Client::from("redis://127.0.0.1:9851");
 
-match n.execute("SET", vec![String("my"), String("home"), Float(23.12), Float(45.343)]) {
+match n.execute("SET", vec![String("my"), String("home"), String("POINT"), Float(23.12), Float(45.343)]) {
     Ok(s) => println!("{}", s),
     Err(e) => panic!(e)
 }
